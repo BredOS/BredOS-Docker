@@ -1,0 +1,25 @@
+[options]
+HoldPkg = pacman glibc
+Architecture = x86_64
+#NoProgressBar
+CheckSpace
+ParallelDownloads = 5
+SigLevel = Never
+LocalFileSigLevel = Optional
+
+[BredOS-any]
+Include = /etc/pacman.d/bredos-mirrorlist
+
+[BredOS]
+Include = /etc/pacman.d/bredos-mirrorlist
+
+[multilib]
+Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch
+
+[core]
+Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch
+
+[extra]
+Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch
+
+

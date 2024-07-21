@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+pacman-key --init
+pacman-key --populate archlinuxarm || true
+pacman-key --populate archlinux bredos
+
+/usr/bin/bash

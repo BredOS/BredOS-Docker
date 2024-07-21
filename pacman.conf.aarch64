@@ -1,0 +1,29 @@
+[options]
+HoldPkg = pacman glibc
+Architecture = aarch64
+#NoProgressBar
+CheckSpace
+ParallelDownloads = 5
+SigLevel = Never
+LocalFileSigLevel = Optional
+
+[BredOS-any]
+Include = /etc/pacman.d/bredos-mirrorlist
+
+[BredOS]
+Include = /etc/pacman.d/bredos-mirrorlist
+
+[BredOS-multilib]
+Include = /etc/pacman.d/bredos-mirrorlist
+
+[core]
+Server = http://mirror.archlinuxarm.org/$arch/$repo
+
+[extra]
+Server = http://mirror.archlinuxarm.org/$arch/$repo
+
+[alarm]
+Server = http://mirror.archlinuxarm.org/$arch/$repo
+
+[aur]
+Server = http://mirror.archlinuxarm.org/$arch/$repo

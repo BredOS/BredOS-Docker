@@ -1,7 +1,7 @@
 [options]
 HoldPkg = pacman glibc
-Architecture = aarch64
-NoProgressBar
+Architecture = armv7h
+#NoProgressBar
 CheckSpace
 ParallelDownloads = 5
 SigLevel = Required DatabaseOptional
@@ -11,9 +11,6 @@ LocalFileSigLevel = Optional
 Include = /etc/pacman.d/bredos-mirrorlist
 
 [BredOS]
-Include = /etc/pacman.d/bredos-mirrorlist
-
-[BredOS-multilib]
 Include = /etc/pacman.d/bredos-mirrorlist
 
 [core]

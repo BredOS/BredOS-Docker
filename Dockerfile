@@ -1,29 +1,28 @@
-FROM bredos/bredos AS builder
+# syntax=docker/dockerfile:experimental
+FROM bredos/bredos:amd64 AS builder
 
-WORKDIR /bredos
-
-RUN mkdir -p /bredos/rootfs
-
-COPY pacstrap-docker /archlinux/
-
-RUN ./pacstrap-docker /bredos/rootfs \
-      bash sed gzip pacman archlinux-keyring && \
-    (pacman -r /bredos/rootfs -S --noconfirm archlinuxarm-keyring || true) && \
-    rm rootfs/var/lib/pacman/sync/*
+RUN mkdir -p /bredos
+COPY . /bredos/
+RUN /usr/bin/init-docker
+ARG ARCH
+ARG TARGETPLATFORM
+RUN --security=insecure case "$TARGETPLATFORM" in \
+        "linux/amd64") ARCH="x86_64" ;; \
+        "linux/arm/v7") ARCH="armv7h" ;; \
+        "linux/arm64") ARCH="aarch64" ;; \
+        *) echo "Unsupported TARGETPLATFORM: $TARGETPLATFORM" && exit 1 ;; \
+    esac && \
+    /bredos/build.sh "$ARCH"
 
 FROM scratch
 
-ARG BUILDARCH
-COPY --from=builder /bredos/rootfs/ /
-COPY rootfs/common/ /
-COPY rootfs/$BUILDARCH/ /
-
+COPY --from=builder /bredos/build/rootfs/ /
+SHELL ["/bin/sh", "-c"]
 ENV LANG=en_US.UTF-8
 
-RUN locale-gen && \
-    pacman-key --init && \
-    pacman-key --populate archlinux && \
-    (pacman-key --populate archlinuxarm || true) && \
-    echo 68B3537F39A313B3E574D06777193F152BDBE6A6:6: | gpg --homedir /etc/pacman.d/gnupg --allow-weak-key-signatures --import-ownertrust
+RUN { groupadd wheel &> /dev/null || true; } \
+    && useradd --create-home --groups wheel bred \
+    && chmod +x /usr/bin/init-docker \
+    && locale-gen
 
-CMD ["/usr/bin/bash"]
+CMD ["/usr/bin/init-docker"]
