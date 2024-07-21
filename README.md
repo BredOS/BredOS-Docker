@@ -5,6 +5,6 @@ Built daily by GitHub Actions on publicly visible infrastructure using QEMU emul
 
 ## Running the images
 
-The images are on [Docker Hub](https://hub.docker.com/bill88t/bredos). Use the convenient `docker run`:
+The images are available on [Docker Hub](https://hub.docker.com/r/bredos/bredos). Use the convenient `docker run`:
 
     docker run -it --rm bredos/bredos
