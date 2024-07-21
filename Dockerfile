@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:experimental
-FROM bredos/bredos:amd64 AS builder
+FROM bredos/bredos AS builder
 
 RUN mkdir -p /bredos
 COPY . /bredos/
@@ -12,7 +12,7 @@ RUN --security=insecure case "$TARGETPLATFORM" in \
         "linux/arm64") ARCH="aarch64" ;; \
         *) echo "Unsupported TARGETPLATFORM: $TARGETPLATFORM" && exit 1 ;; \
     esac && \
-    /bredos/build.sh "$ARCH"
+    /bredos/build.sh $ARCH
 
 FROM scratch
 
