@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 
+echo "Initializing pacman database, please wait.."
 pacman-key --init
+echo "Populating database.."
 pacman-key --populate archlinuxarm || true
 pacman-key --populate archlinux bredos
-
+echo
 /usr/bin/bash
